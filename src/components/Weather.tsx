@@ -15,24 +15,29 @@ function Weather({ cities }: WeatherProps) {
   const city = cities[cityIndex];
 
   useEffect(() => {
-    // (async () => {})();
     if (!city) {
       return;
     }
     setLoading(true);
     setWeatherData(null);
 
-    getWeather(city)
-      .then((data) => setWeatherData(data))
-      // .catch()
-      .finally(() => {
+    (async () => {
+      try {
+        const response = await getWeather(city);
+        setWeatherData(response);
+      } catch(e) {
+        console.log(e.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    })();
   }, [city]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCityIndex((cityIndex) => (cityIndex < cities.length - 1 ? cityIndex + 1 : 0));
+      setCityIndex((cityIndex) =>
+        cityIndex < cities.length - 1 ? cityIndex + 1 : 0
+      );
     }, 3000);
 
     return () => {

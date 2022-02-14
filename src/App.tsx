@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Loader from "./components/Loader";
 import Page from "./components/Page";
 import Weather from "./components/Weather";
 
